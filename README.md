@@ -1,6 +1,6 @@
 # Sunday Bakehouse: an AI avatar that takes your order
 
-A live AI barista on a cafe website. You talk, Hollis answers with a real face, and the page changes as you go: it jumps to sections, filters the menu by diet, highlights dishes, builds your order and places it.
+A live AI barista on a cafe website. You talk, Clara answers with a real face, and the page changes as you go: it jumps to sections, filters the menu by diet, highlights dishes, builds your order and places it.
 
 Built with [Pipecat](https://github.com/pipecat-ai/pipecat) and [`pipecat-akapulu`](https://pypi.org/project/pipecat-akapulu/), which adds the face.
 
