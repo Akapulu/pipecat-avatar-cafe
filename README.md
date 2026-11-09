@@ -1,0 +1,51 @@
+# Sunday Bakehouse: an AI avatar that takes your order
+
+A live AI barista on a cafe website. You talk, Hollis answers with a real face, and the page changes as you go: it jumps to sections, filters the menu by diet, highlights dishes, builds your order and places it.
+
+Built with [Pipecat](https://github.com/pipecat-ai/pipecat) and [`pipecat-akapulu`](https://pypi.org/project/pipecat-akapulu/), which adds the face.
+
+## How it works
+
+Three participants join one Daily room: you in the browser, the voice bot, and the Akapulu Labs avatar.
+
+1. `server.py` serves the page. **Start talking** calls `POST /session`.
+2. `session.py` creates a private Daily room, mints tokens, and starts an Akapulu Labs live session.
+3. `bot.py` joins and runs the pipeline: Deepgram Flux (listening + turn-taking) → `gpt-5.4-mini` → Cartesia Sonic 3.6 → `AkapuluAvatar`.
+4. The avatar joins as its own participant and publishes the face and voice.
+5. When the model calls a tool, the bot sends a small Daily app message (`label: "cafe"`). `web/app.js` updates the page.
+
+Adding the face to a Pipecat bot is one processor:
+
+```python
+from pipecat_akapulu import AkapuluAvatar
+
+avatar = AkapuluAvatar(session_id=session_id)
+pipeline = Pipeline([transport.input(), stt, user_agg, llm, tts, avatar, transport.output(), assistant_agg])
+```
+
+## Tools
+
+| Tool | What the page does |
+|---|---|
+| `show_section` | Scrolls to Coffee, Tea, Pastries or Breakfast |
+| `filter_menu` | Dims everything that is not vegan / dairy-free / gluten-free / caffeine-free |
+| `highlight_item` | Rings and scrolls to one item |
+| `add_to_order`, `remove_from_order` | Updates the order card and item badges |
+| `place_order` | Shows the pickup confirmation |
+
+The menu lives in `menu.py`. The bot's prompt and the page both read it.
+
+## Run
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # DAILY, AKAPULU, OPENAI, DEEPGRAM, CARTESIA keys
+python server.py
+```
+
+Open http://127.0.0.1:7860 and press **Start talking**. Tests: `pytest`.
+
+## Cost
+
+Akapulu Labs bills 1 credit per live minute. The free plan includes 10 minutes. Starter is $48.97/month for 251 minutes. See [pricing](https://akapulu.com/pricing).

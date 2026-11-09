@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sunday Bakehouse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div id="app" class="is-idle">
+      <header class="top">
+        <div class="brand">
+          <span class="logo">☀︎</span>
+          <div>
+            <h1 id="cafe-name">Sunday Bakehouse</h1>
+            <p>Order ahead. Just talk to Hollis.</p>
+          </div>
+        </div>
+        <nav id="sections" class="sections"></nav>
+      </header>
+
+      <main class="layout">
+        <section class="menu">
+          <div id="filters" class="filters"></div>
+          <div id="menu"></div>
+        </section>
+
+        <aside class="side">
+          <div class="screen">
+            <video id="avatar" playsinline autoplay></video>
+            <div id="idle" class="idle">
+              <p>Hi! I'm Hollis.</p>
+              <span>Press start and tell me what you're craving.</span>
+            </div>
+            <div id="loading" class="loading" hidden role="status">
+              <div class="track"><div id="fill" class="fill"></div></div>
+              <p id="status">Ready</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="start" type="button">Start talking</button>
+            <button id="end" class="hangup" type="button" disabled>End</button>
+          </div>
+          <div id="banner" class="banner" hidden role="status"></div>
+
+          <div class="order">
+            <h2>Your order</h2>
+            <ul id="order-lines"></ul>
+            <p id="order-empty" class="muted">Nothing yet.</p>
+            <div class="total"><span>Total</span><strong id="order-total">$0.00</strong></div>
+            <div id="placed" class="placed" hidden></div>
+          </div>
+        </aside>
+      </main>
+    </div>
+    <script type="module" src="/static/app.js"></script>
+  </body>
+</html>
