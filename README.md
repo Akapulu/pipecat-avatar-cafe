@@ -38,6 +38,7 @@ The menu lives in `menu.py`. The bot's prompt and the page both read it.
 ## Run
 
 ```bash
+git clone https://github.com/Akapulu/pipecat-avatar-cafe && cd pipecat-avatar-cafe
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env   # DAILY, AKAPULU, OPENAI, DEEPGRAM, CARTESIA keys
