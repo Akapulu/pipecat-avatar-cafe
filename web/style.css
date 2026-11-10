@@ -133,6 +133,7 @@ h1, h2, h3 { font-family: Fraunces, Georgia, serif; margin: 0; }
 #app:not(.is-idle):not(.is-ended) .idle { display: none; }
 
 .loading {
+  z-index: 3;
   position: absolute; left: 16px; right: 16px; bottom: 16px;
   padding: 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.9);
 }
