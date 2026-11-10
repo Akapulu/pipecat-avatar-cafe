@@ -10,7 +10,7 @@ the played audio. When the participant named Avatar joins, this bot turns
 that microphone off. The browser stays subscribed to it.
 
 look_at_camera grabs one frame of the caller's camera and gives it to the
-model, so Clara can read a gift card held up to the camera.
+model, so Hollis can read a gift card held up to the camera.
 """
 
 import asyncio
@@ -53,8 +53,8 @@ SETUP_TIMEOUT_SECS = 180.0
 USER_JOIN_TIMEOUT_SECS = 180.0
 SPEAKER_MODEL = "gpt-5.4-mini"
 SONIC_MODEL = "sonic-3.6"
-# Katie, Friendly Fixer. Female Sonic voice for Clara.
-SONIC_VOICE_ID = "f786b574-daa5-4673-aa0c-cbe3e8534c02"
+# Carson, Curious Conversationalist. Male Sonic voice for Hollis.
+SONIC_VOICE_ID = "86e30c1d-714b-4074-a1f2-1cb6b552fb49"
 FLUX_MODEL = "flux-general-multi"
 EAGER_EOT_THRESHOLD = 0.5
 # Codes flux-general-multi returns, and the only codes this bot will lock.
@@ -72,7 +72,7 @@ FLUX_LANGUAGES = frozenset(
         Language.RU,
     }
 )
-SPOKEN_INSTRUCTION = f"""You are Clara, the friendly barista at {CAFE_NAME}, taking an order on the cafe's website.
+SPOKEN_INSTRUCTION = f"""You are Hollis, the friendly barista at {CAFE_NAME}, taking an order on the cafe's website.
 You are speaking out loud, so reply in one or two short sentences. No lists, no markdown, no prices unless asked.
 Speak the language of the caller's latest turn.
 
