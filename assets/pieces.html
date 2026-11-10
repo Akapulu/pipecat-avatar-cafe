@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>The 7 pieces</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1016;--card:#151a22;--line:#232a35;--ink:#f1f4f8;--soft:#8b95a3;--you:#2dd4bf;--ak:#f08a4b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(1200px 600px at 70% -10%,#1b2230 0,var(--bg) 60%);color:var(--ink);font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:48px}
+.wrap{width:1320px}
+.kicker{font:500 12px "JetBrains Mono",monospace;letter-spacing:.18em;color:var(--you);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.kicker:before{content:"";width:22px;height:1px;background:var(--you)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;margin:14px 0 30px}
+h1{font-size:50px;line-height:1.08;font-weight:700;margin:0;letter-spacing:-.02em}
+h1 span{color:#7d8794}
+.legend{display:flex;gap:18px;font-size:13px;color:var(--soft)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.strip{display:grid;grid-template-columns:repeat(9,1fr);border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#11151c;margin-bottom:16px}
+.strip div{padding:14px 6px;text-align:center;border-right:1px solid var(--line);font-size:14px;font-weight:600;color:var(--you)}
+.strip div:last-child{border-right:0}
+.strip small{display:block;font:500 10px "JetBrains Mono",monospace;color:#5d6773;margin-top:4px;letter-spacing:.08em}
+.strip .end{color:var(--ink)}
+.strip .ak{color:var(--ak);background:rgba(240,138,75,.08)}
+.strip .flux{background:rgba(45,212,191,.06)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-left:2px solid var(--you);border-radius:12px;padding:18px 18px 20px;min-height:150px}
+.card.ak{border-left-color:var(--ak)}
+.tag{font:500 11px "JetBrains Mono",monospace;color:var(--you);margin-bottom:8px}
+.card.ak .tag{color:var(--ak)}
+.card h3{margin:0 0 8px;font-size:18px}
+.card p{margin:0;color:var(--soft);font-size:14px;line-height:1.5}
+.card b{color:var(--ink);font-weight:600}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.note{background:#11151c;border:1px solid var(--line);border-radius:12px;padding:16px 20px;display:flex;gap:18px;align-items:center;font-size:14px;color:var(--soft)}
+.note strong{color:var(--ink)}
+.big{font:500 26px "JetBrains Mono",monospace;color:#f5c451;white-space:nowrap}
+</style></head><body><div class="wrap">
+<div class="kicker">The pieces</div>
+<div class="head">
+  <h1>One face.<br><span>Seven pieces behind it.</span></h1>
+  <div class="legend"><span><i style="background:var(--you)"></i>Pipecat (your code)</span><span><i style="background:var(--ak)"></i>Akapulu</span></div>
+</div>
+<div class="strip">
+  <div class="end">Your mic<small>AUDIO IN</small></div>
+  <div>Daily room<small>1</small></div>
+  <div class="flux">Listening<small>2 · FLUX</small></div>
+  <div class="flux">Turn-taking<small>3 · FLUX</small></div>
+  <div>LLM<small>4</small></div>
+  <div>Tools<small>5</small></div>
+  <div>Voice<small>6</small></div>
+  <div class="ak">Face<small>7</small></div>
+  <div class="end">The page<small>VIDEO OUT</small></div>
+</div>
+<div class="grid">
+  <div class="card"><div class="tag">01 · the room</div><h3>Daily</h3><p>A video call with three people in it: <b>you, the voice bot, and the avatar.</b> Audio and video move over WebRTC.</p></div>
+  <div class="card"><div class="tag">02 · listening</div><h3>Voice to text, live</h3><p>Deepgram Flux writes down your words <b>while you are still talking</b>, so the text is ready the moment you stop.</p></div>
+  <div class="card"><div class="tag">03 · turn-taking</div><h3>Are you done?</h3><p>"I'd like a…" then a pause is not the end. Flux reads the words and the silence, and <b>waits</b> until you really finish.</p></div>
+  <div class="card"><div class="tag">04 · the brain</div><h3>GPT 5.4 mini</h3><p>Reasoning off, so it answers fast. Your prompt, your menu, your rules. <b>Swap the model in one line.</b></p></div>
+  <div class="card"><div class="tag">05 · tools</div><h3>How it changes the page</h3><p>The model calls a function and the page reacts: <b>filter the menu, add to the order, read a gift card.</b></p></div>
+  <div class="card"><div class="tag">06 · the voice</div><h3>Cartesia Sonic</h3><p>Each sentence becomes speech <b>as soon as it is written</b>. The first words play while the rest is still coming.</p></div>
+  <div class="card ak"><div class="tag">07 · the face</div><h3>Akapulu</h3><p>Turns the voice into a talking face, lips in sync, in real time. <b>One line in your Pipecat pipeline.</b></p></div>
+  <div class="card"><div class="tag">→ · back to you</div><h3>The page updates</h3><p>The face joins the call like a person. Tool results reach the page as <b>small messages through the room.</b></p></div>
+</div>
+<div class="notes">
+  <div class="note"><span class="big">~200ms</span><span><strong>The gap between turns when people talk.</strong> Every piece starts before the one before it has finished, so the reply fits close to that.</span></div>
+  <div class="note"><span class="big">⟲</span><span><strong>It keeps listening.</strong> Start talking while it answers, and it stops and starts again with what you just said.</span></div>
+</div>
+</div></body></html>
