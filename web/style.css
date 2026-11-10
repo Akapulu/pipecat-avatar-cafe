@@ -58,9 +58,10 @@ h1, h2, h3 { font-family: Fraunces, Georgia, serif; margin: 0; }
   gap: 32px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 32px 64px;
+  padding: 24px 32px 0;
 }
 
+.menu { padding-bottom: 64px; }
 .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .chip {
   padding: 6px 12px; border-radius: 999px;
@@ -102,17 +103,19 @@ h1, h2, h3 { font-family: Fraunces, Georgia, serif; margin: 0; }
   font-size: 12px; font-weight: 600; display: grid; place-items: center;
 }
 
-.side { position: sticky; top: 96px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+.side { position: sticky; top: 92px; align-self: start; display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 104px); }
 
 .screen {
   position: relative;
-  aspect-ratio: 4 / 5;
+  flex: 0 1 auto;
+  aspect-ratio: 1 / 1;
+  min-height: 220px;
   border-radius: 22px;
   overflow: hidden;
   background: linear-gradient(160deg, #f3e3cf, #e7cdb0);
   box-shadow: var(--shadow);
 }
-.screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.screen video { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
 .idle {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -140,7 +143,7 @@ h1, h2, h3 { font-family: Fraunces, Georgia, serif; margin: 0; }
 
 .banner { padding: 10px 12px; border-radius: 10px; background: #fde8e4; color: #8a2b1a; font-size: 13px; }
 
-.order { padding: 18px; border-radius: 18px; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.order { overflow-y: auto; min-height: 0; padding: 18px; border-radius: 18px; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); }
 .order h2 { font-size: 20px; margin-bottom: 10px; }
 .order ul { list-style: none; margin: 0; padding: 0; }
 .order li {
