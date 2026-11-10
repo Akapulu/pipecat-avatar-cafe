@@ -55,3 +55,20 @@ def test_place_order_refuses_empty():
 
     order = CafeOrder(FakeTransport())
     assert "empty" in call(order, "place_order", name="Sam")
+
+
+def test_gift_card_takes_balance_off_total():
+    from bot import CafeOrder
+
+    transport = FakeTransport()
+    order = CafeOrder(transport)
+    call(order, "add_to_order", item_id="oat-latte", quantity=2)
+    assert "not a valid" in call(order, "apply_gift_card", code="STARBUCKS-1")
+    assert "Total $0.00" in call(order, "apply_gift_card", code="sunday 2517".replace(" ", "-"))
+    assert transport.out.sent[-1] == {"label": "cafe", "event": "order", "lines": {"oat-latte": 2}, "gift": 25.0, "total": 0.0}
+
+
+def test_look_at_camera_needs_a_caller():
+    from bot import CafeOrder
+
+    assert "not on" in call(CafeOrder(FakeTransport()), "look_at_camera", question="gift card?")

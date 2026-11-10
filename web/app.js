@@ -3,6 +3,7 @@ import Daily from "https://cdn.jsdelivr.net/npm/@daily-co/daily-js@0.93.0/+esm";
 const app = document.querySelector("#app");
 const banner = document.querySelector("#banner");
 const video = document.querySelector("#avatar");
+const me = document.querySelector("#me");
 const status = document.querySelector("#status");
 const fill = document.querySelector("#fill");
 const loading = document.querySelector("#loading");
@@ -74,7 +75,14 @@ function onAppMessage(event) {
 }
 
 function onTrackStarted(event) {
-  if (!event || !event.track || !event.participant || event.participant.local) {
+  if (event && event.track && event.participant && event.participant.local) {
+    if (event.track.kind === "video") {
+      me.srcObject = new MediaStream([event.track]);
+      me.hidden = false;
+    }
+    return;
+  }
+  if (!event || !event.track || !event.participant) {
     return;
   }
   if (event.participant.user_name !== "Avatar") {
@@ -114,6 +122,8 @@ async function endCall() {
     current.destroy();
   }
   video.srcObject = null;
+  me.srcObject = null;
+  me.hidden = true;
   if (audio) {
     audio.srcObject = null;
   }
@@ -168,7 +178,7 @@ async function startCall() {
     return;
   }
   call = Daily.createCallObject({
-    videoSource: false,
+    videoSource: true,
     audioSource: true,
     subscribeToTracksAutomatically: true,
   });
@@ -184,7 +194,7 @@ async function startCall() {
       url: body.room_url,
       token: body.token,
       userName: "You",
-      startVideoOff: true,
+      startVideoOff: false,
       startAudioOff: false,
     });
   } catch (error) {
@@ -228,6 +238,8 @@ const orderLines = document.querySelector("#order-lines");
 const orderEmpty = document.querySelector("#order-empty");
 const orderTotal = document.querySelector("#order-total");
 const placed = document.querySelector("#placed");
+const giftRow = document.querySelector("#order-gift");
+const giftAmount = document.querySelector("#order-gift-amount");
 let menu = null;
 let hotTimer = null;
 
@@ -294,7 +306,7 @@ function highlight(id) {
   hotTimer = setTimeout(() => card.classList.remove("is-hot"), 4000);
 }
 
-function renderOrder(lines, total) {
+function renderOrder(lines, total, gift = 0) {
   orderLines.replaceChildren();
   for (const badge of menuEl.querySelectorAll(".badge")) badge.remove();
   const byId = Object.fromEntries(menu.items.map((i) => [i.id, i]));
@@ -306,6 +318,8 @@ function renderOrder(lines, total) {
     document.querySelector(`#item-${id}`)?.append(el("span", "badge", qty));
   }
   orderEmpty.hidden = orderLines.children.length > 0;
+  giftRow.hidden = !gift;
+  giftAmount.textContent = `−${money(gift)}`;
   orderTotal.textContent = money(total);
 }
 
@@ -320,7 +334,11 @@ function onCafeEvent(msg) {
   if (msg.event === "section") showSection(msg.section);
   if (msg.event === "filter") filterMenu(msg.tag);
   if (msg.event === "highlight") highlight(msg.item_id);
-  if (msg.event === "order") renderOrder(msg.lines, msg.total);
+  if (msg.event === "order") renderOrder(msg.lines, msg.total, msg.gift);
+  if (msg.event === "looking") {
+    me.classList.add("is-looking");
+    setTimeout(() => me.classList.remove("is-looking"), 1500);
+  }
   if (msg.event === "placed") {
     placed.hidden = false;
     placed.textContent = `Order placed for ${msg.name}. Ready in about ${msg.ready_minutes} minutes. ☕`;

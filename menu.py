@@ -38,6 +38,9 @@ ITEMS = [
 
 ITEMS_BY_ID = {item["id"]: item for item in ITEMS}
 
+# Gift card codes the cafe has sold, and their balances.
+GIFT_CARDS = {"SUNDAY-2517": 25.00}
+
 
 def menu_for_prompt() -> str:
     """The menu as plain lines for the system prompt."""

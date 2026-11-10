@@ -6,7 +6,7 @@
     <title>Sunday Bakehouse</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/style.css?v=3" />
+    <link rel="stylesheet" href="/static/style.css?v=4" />
   </head>
   <body>
     <div id="app" class="is-idle">
@@ -30,6 +30,7 @@
         <aside class="side">
           <div class="screen">
             <video id="avatar" playsinline autoplay></video>
+            <video id="me" class="me" playsinline autoplay muted hidden></video>
             <div id="idle" class="idle">
               <p>Hi! I'm Clara.</p>
               <span>Press start and tell me what you're craving.</span>
@@ -48,6 +49,7 @@
           <div class="order">
             <h2>Your order</h2>
             <ul id="order-lines"></ul>
+            <div id="order-gift" class="gift" hidden><span>Gift card</span><span id="order-gift-amount"></span></div>
             <p id="order-empty" class="muted">Nothing yet.</p>
             <div class="total"><span>Total</span><strong id="order-total">$0.00</strong></div>
             <div id="placed" class="placed" hidden></div>
@@ -55,6 +57,6 @@
         </aside>
       </main>
     </div>
-    <script type="module" src="/static/app.js?v=3"></script>
+    <script type="module" src="/static/app.js?v=4"></script>
   </body>
 </html>

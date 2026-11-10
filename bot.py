@@ -8,6 +8,9 @@ Deepgram Flux hears the caller. gpt-5.4-mini speaks. Cartesia Sonic 3.6
 speaks each finished sentence. The Akapulu worker publishes the face and
 the played audio. When the participant named Avatar joins, this bot turns
 that microphone off. The browser stays subscribed to it.
+
+look_at_camera grabs one frame of the caller's camera and gives it to the
+model, so Clara can read a gift card held up to the camera.
 """
 
 import asyncio
@@ -21,6 +24,7 @@ from pipecat.frames.frames import (
     STTUpdateSettingsFrame,
     TranscriptionFrame,
     TTSUpdateSettingsFrame,
+    UserImageRequestFrame,
 )
 from pipecat.pipeline.pipeline import Pipeline
 from pipecat.pipeline.worker import PipelineParams, PipelineWorker
@@ -41,7 +45,7 @@ from pipecat.transports.daily.transport import (
 from pipecat.workers.runner import WorkerRunner
 from pipecat_akapulu import AkapuluAvatar
 
-from menu import CAFE_NAME, ITEMS_BY_ID, SECTIONS, TAGS, menu_for_prompt
+from menu import CAFE_NAME, GIFT_CARDS, ITEMS_BY_ID, SECTIONS, TAGS, menu_for_prompt
 from session import AVATAR_NAME, USER_NAME
 
 SAMPLE_RATE = 24000
@@ -80,6 +84,8 @@ Use your tools to drive the page while you talk:
 - After you change the order, end your reply with a short question, like "Anything else?"
 - When the caller says that's all, ask for a name for pickup. If they give the name in the same breath, place the order right away.
 - place_order only after the caller confirms the order is complete and gives a name for pickup.
+- look_at_camera when the caller wants to show you something, like "can I use this?" Say something short like "Let me take a look" in the same reply.
+- apply_gift_card when you can read a {CAFE_NAME} gift card code on camera. If the card is from another store, kindly say you can only take {CAFE_NAME} gift cards. If you can't read the code, ask them to hold it closer.
 Only offer items on this menu. Use the exact item ids.
 
 Menu:
@@ -122,6 +128,18 @@ TOOLS = ToolsSchema(
             required=["item_id"],
         ),
         FunctionSchema(
+            name="look_at_camera",
+            description="See one frame from the caller's camera.",
+            properties={"question": {"type": "string", "description": "What to look for."}},
+            required=["question"],
+        ),
+        FunctionSchema(
+            name="apply_gift_card",
+            description="Check a gift card code and take its balance off the order.",
+            properties={"code": {"type": "string", "description": "The code printed on the card."}},
+            required=["code"],
+        ),
+        FunctionSchema(
             name="place_order",
             description="Place the order once the caller confirms it and gives a pickup name.",
             properties={"name": {"type": "string"}},
@@ -137,15 +155,21 @@ class CafeOrder:
     def __init__(self, transport: DailyTransport):
         self._transport = transport
         self.lines: dict[str, int] = {}
+        self.gift = 0.0
+        self.caller_id: str | None = None
+
+    def subtotal(self) -> float:
+        return round(sum(ITEMS_BY_ID[i]["price"] * q for i, q in self.lines.items()), 2)
 
     def total(self) -> float:
-        return round(sum(ITEMS_BY_ID[i]["price"] * q for i, q in self.lines.items()), 2)
+        return round(max(0.0, self.subtotal() - self.gift), 2)
 
     def summary(self) -> str:
         if not self.lines:
             return "The order is empty."
         parts = [f"{q} x {ITEMS_BY_ID[i]['name']}" for i, q in self.lines.items()]
-        return f"Order: {', '.join(parts)}. Total ${self.total():.2f}."
+        gift = f" Gift card ${self.gift:.2f}." if self.gift else ""
+        return f"Order: {', '.join(parts)}.{gift} Total ${self.total():.2f}."
 
     async def _send(self, event: str, **data) -> None:
         message = {"label": "cafe", "event": event, **data}
@@ -154,7 +178,7 @@ class CafeOrder:
         )
 
     async def _send_order(self) -> None:
-        await self._send("order", lines=self.lines, total=self.total())
+        await self._send("order", lines=self.lines, gift=self.gift, total=self.total())
 
     async def show_section(self, params: FunctionCallParams) -> None:
         section = params.arguments["section"]
@@ -183,6 +207,33 @@ class CafeOrder:
         self.lines.pop(params.arguments["item_id"], None)
         await self._send_order()
         await params.result_callback(self.summary())
+
+    async def look_at_camera(self, params: FunctionCallParams) -> None:
+        if not self.caller_id:
+            await params.result_callback("The caller's camera is not on.")
+            return
+        await self._send("looking")
+        await params.llm.push_frame(
+            UserImageRequestFrame(
+                user_id=self.caller_id,
+                text=params.arguments["question"],
+                append_to_context=True,
+                function_name=params.function_name,
+                tool_call_id=params.tool_call_id,
+                result_callback=params.result_callback,
+            ),
+            FrameDirection.UPSTREAM,
+        )
+
+    async def apply_gift_card(self, params: FunctionCallParams) -> None:
+        code = params.arguments["code"].strip().upper().replace(" ", "")
+        balance = GIFT_CARDS.get(code)
+        if balance is None:
+            await params.result_callback(f"{code} is not a valid {CAFE_NAME} gift card.")
+            return
+        self.gift = balance
+        await self._send_order()
+        await params.result_callback(f"Gift card {code} has ${balance:.2f}. Applied. {self.summary()}")
 
     async def place_order(self, params: FunctionCallParams) -> None:
         if not self.lines:
@@ -276,6 +327,7 @@ async def run_bot(room_url: str, token: str, session_id: str) -> None:
         DailyParams(
             audio_in_enabled=True,
             audio_out_enabled=False,
+            video_in_enabled=True,
             video_out_enabled=False,
         ),
     )
@@ -367,6 +419,8 @@ async def run_bot(room_url: str, token: str, session_id: str) -> None:
         if joined.is_set():
             raise RuntimeError("Daily browser joined twice")
         joined.set()
+        order.caller_id = participant["id"]
+        await transport.capture_participant_video(participant["id"], on_request_only=True)
         await worker.queue_frames([LLMRunFrame()])
 
     @transport.event_handler("on_client_disconnected")
