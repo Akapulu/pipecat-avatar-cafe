@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1016;--card:#151a22;--line:#232a35;--ink:#f1f4f8;--soft:#8b95a3;--you:#2dd4bf;--ak:#f08a4b;--room:#7aa2ff}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:radial-gradient(1200px 600px at 70% -10%,#1b2230 0,var(--bg) 60%);color:var(--ink);font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;justify-content:center}
+svg{width:min(100vw,177.78vh);height:auto}
+.k{font:500 14px "JetBrains Mono",monospace;letter-spacing:.18em;fill:var(--you)}
+.h1{font:700 50px Inter;fill:var(--ink);letter-spacing:-1px}
+.h1 tspan.d{fill:#7d8794}
+.box{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.bt{font:700 30px Inter;fill:var(--ink)}
+.bf{font:500 20px "JetBrains Mono",monospace;fill:var(--you)}
+.bf.ak{fill:var(--ak)}
+.bd{font:400 19px Inter;fill:var(--soft)}
+.edge{stroke-width:3;fill:none}
+.lbl{font:600 18px Inter;fill:var(--ink)}
+.num{font:700 22px Inter;fill:#0d1016;text-anchor:middle;dominant-baseline:central}
+.pill{fill:#1b2230;stroke:#2c3544}
+.pt{font:600 18px Inter;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+</style></head><body>
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f1f4f8"/></marker>
+  <marker id="t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2dd4bf"/></marker>
+</defs>
+
+<line x1="96" y1="96" x2="124" y2="96" stroke="#2dd4bf"/><text x="136" y="101" class="k">ARCHITECTURE</text>
+<text x="96" y="170" class="h1">Three files you write. <tspan class="d">Two services.</tspan></text>
+<g font-family="Inter" font-size="17" fill="#8b95a3">
+  <rect x="1420" y="150" width="12" height="12" rx="2" fill="#2dd4bf"/><text x="1440" y="161">Your code</text>
+  <rect x="1560" y="150" width="12" height="12" rx="2" fill="#7aa2ff"/><text x="1580" y="161">Daily</text>
+  <rect x="1660" y="150" width="12" height="12" rx="2" fill="#f08a4b"/><text x="1680" y="161">Akapulu</text>
+</g>
+
+<!-- Browser -->
+<rect class="box" x="96" y="250" width="500" height="200" rx="16" style="stroke:#2dd4bf;stroke-opacity:.5"/>
+<rect x="96" y="250" width="4" height="200" rx="2" fill="#2dd4bf"/>
+<text x="130" y="305" class="bt">The page</text><text x="130" y="340" class="bf">web/</text>
+<text x="130" y="380" class="bd">Your mic in. The avatar's video out.</text>
+<text x="130" y="408" class="bd">Updates the menu and the order.</text>
+
+<!-- Server -->
+<rect class="box" x="96" y="660" width="500" height="200" rx="16" style="stroke:#2dd4bf;stroke-opacity:.5"/>
+<rect x="96" y="660" width="4" height="200" rx="2" fill="#2dd4bf"/>
+<text x="130" y="715" class="bt">Server</text><text x="130" y="750" class="bf">server.py</text>
+<text x="130" y="790" class="bd">Holds the secret keys. Makes the room,</text>
+<text x="130" y="818" class="bd">starts Akapulu and the agent.</text>
+
+<!-- Bot -->
+<rect class="box" x="1324" y="250" width="500" height="200" rx="16" style="stroke:#2dd4bf;stroke-opacity:.5"/>
+<rect x="1324" y="250" width="4" height="200" rx="2" fill="#2dd4bf"/>
+<text x="1358" y="305" class="bt">Pipecat agent</text><text x="1358" y="340" class="bf">bot.py</text>
+<text x="1358" y="380" class="bd">Listens, thinks, calls tools, speaks.</text>
+<text x="1358" y="408" class="bd">The 7 pieces live here.</text>
+
+<!-- Akapulu -->
+<rect class="box" x="1324" y="660" width="500" height="200" rx="16" style="stroke:#f08a4b;stroke-opacity:.6;fill:#1e1a18"/>
+<rect x="1324" y="660" width="4" height="200" rx="2" fill="#f08a4b"/>
+<text x="1358" y="715" class="bt">Akapulu</text><text x="1358" y="750" class="bf ak">service</text>
+<text x="1358" y="790" class="bd">Turns the agent's voice into Hollis's</text>
+<text x="1358" y="818" class="bd">face, lips in sync, in real time.</text>
+
+<!-- Room -->
+<circle cx="960" cy="555" r="215" fill="rgba(122,162,255,.06)" stroke="#7aa2ff" stroke-width="2" stroke-dasharray="8 8"/>
+<text x="960" y="440" text-anchor="middle" font-family="Inter" font-weight="700" font-size="34" fill="#7aa2ff">Daily room</text>
+<text x="960" y="474" text-anchor="middle" font-family="Inter" font-size="19" fill="#8b95a3">One video call, three people</text>
+<rect class="pill" x="880" y="505" width="160" height="40" rx="20"/><text x="960" y="525" class="pt">You</text>
+<rect class="pill" x="880" y="557" width="160" height="40" rx="20"/><text x="960" y="577" class="pt">Pipecat agent</text>
+<rect class="pill" x="880" y="609" width="160" height="40" rx="20" style="stroke:#f08a4b"/><text x="960" y="629" class="pt">Avatar</text>
+
+<!-- 1 page -> server -->
+<line class="edge" x1="346" y1="455" x2="346" y2="650" stroke="#f1f4f8" marker-end="url(#a)"/>
+<text x="400" y="560" class="lbl">asks for a room</text>
+<circle cx="346" cy="552" r="20" fill="#f5c451"/><text x="346" y="552" class="num">1</text>
+
+<!-- server -> room (creates, part of 1) -->
+<line class="edge" x1="600" y1="745" x2="770" y2="655" stroke="#f1f4f8" marker-end="url(#a)" stroke-dasharray="2 0"/>
+<text x="610" y="800" class="lbl">creates the room</text>
+
+<!-- 2 page -> room -->
+<line class="edge" x1="600" y1="355" x2="772" y2="450" stroke="#f1f4f8" marker-end="url(#a)"/>
+<text x="610" y="320" class="lbl">joins, sends your mic</text>
+<circle cx="686" cy="402" r="20" fill="#f5c451"/><text x="686" y="402" class="num">2</text>
+
+<!-- 3 bot -> room -->
+<line class="edge" x1="1320" y1="355" x2="1148" y2="450" stroke="#f1f4f8" marker-end="url(#a)"/>
+<text x="1310" y="320" class="lbl" text-anchor="end">joins, hears your mic</text>
+<circle cx="1234" cy="402" r="20" fill="#f5c451"/><text x="1234" y="402" class="num">3</text>
+
+<!-- 4 bot -> akapulu -->
+<line class="edge" x1="1574" y1="455" x2="1574" y2="650" stroke="#f08a4b" marker-end="url(#a)"/>
+<text x="1520" y="560" class="lbl" text-anchor="end">sends its voice</text>
+<circle cx="1574" cy="552" r="20" fill="#f5c451"/><text x="1574" y="552" class="num">4</text>
+
+<!-- 5 akapulu -> room -->
+<line class="edge" x1="1320" y1="745" x2="1150" y2="655" stroke="#f08a4b" marker-end="url(#a)"/>
+<text x="1310" y="800" class="lbl" text-anchor="end">the face joins</text>
+<circle cx="1235" cy="700" r="20" fill="#f5c451"/><text x="1235" y="700" class="num">5</text>
+
+<!-- tools: room -> page -->
+<path class="edge" d="M 752 515 Q 690 470 604 432" stroke="#2dd4bf" stroke-dasharray="6 6" marker-end="url(#t)"/>
+<text x="730" y="548" text-anchor="end" font-family="Inter" font-weight="600" font-size="17" fill="#2dd4bf">tool messages</text>
+<g transform="translate(96 940)">
+  <rect width="1728" height="76" rx="14" fill="#11151c" stroke="#232a35"/>
+  <line x1="28" y1="38" x2="88" y2="38" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="6 6"/>
+  <text x="108" y="44" font-family="Inter" font-size="20" fill="#8b95a3"><tspan fill="#f1f4f8" font-weight="600">Tools.</tspan> When the agent calls a tool, a small message travels through the room to the page, and the page updates.</text>
+</g>
+</svg>
+</body></html>
