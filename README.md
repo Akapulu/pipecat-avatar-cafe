@@ -35,6 +35,18 @@ pipeline = Pipeline([transport.input(), stt, user_agg, llm, tts, avatar, transpo
 
 The menu lives in `menu.py`. The bot's prompt and the page both read it.
 
+## Get your 5 keys
+
+All five have a free tier or free credits.
+
+| Key | Where to get it |
+|---|---|
+| `DAILY_API_KEY` | [dashboard.daily.co](https://dashboard.daily.co) → Developers |
+| `AKAPULU_API_KEY` | [akapulu.com/api-keys](https://akapulu.com/api-keys/) → New key (10 free minutes) |
+| `DEEPGRAM_API_KEY` | [console.deepgram.com](https://console.deepgram.com) → API Keys |
+| `OPENAI_API_KEY` | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
+| `CARTESIA_API_KEY` | [play.cartesia.ai/keys](https://play.cartesia.ai/keys) |
+
 ## Run
 
 ```bash
