@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Thumbnail v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1280px;height:720px;overflow:hidden;background:radial-gradient(900px 600px at 30% 40%,#1b2a4a 0,#0b1224 60%,#070b16 100%);font-family:Inter,sans-serif;position:relative}
+.t{position:absolute;left:52px;top:26px;font:900 98px/1 Montserrat,sans-serif;letter-spacing:-1px;text-transform:uppercase}
+.t1{color:#fff}
+.t2{display:inline-block;margin-top:8px;background:#ffe600;color:#0b0b0b;padding:4px 22px 6px}
+.laptop{position:absolute;left:150px;top:268px;width:640px}
+.screen{background:#111;border:14px solid #1a1a1c;border-bottom-width:18px;border-radius:22px 22px 0 0;overflow:hidden;aspect-ratio:2314/1476;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.screen img{width:100%;height:100%;object-fit:cover;display:block}
+.base{height:26px;margin:0 -42px;background:linear-gradient(#cfd2d6,#8d9095);border-radius:0 0 18px 18px}
+.order{position:absolute;left:28px;top:430px;width:310px;border-radius:16px;border:5px solid #ffe600;box-shadow:0 20px 50px rgba(0,0,0,.55);transform:rotate(-4deg);background:#fff;overflow:hidden}
+.order img{width:100%;display:block}
+.photo{position:absolute;right:0;bottom:0;width:470px;height:690px;border:3px dashed rgba(255,255,255,.35);border-radius:16px 0 0 0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);font:600 22px Inter;text-align:center;padding:30px}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+</style></head><body>
+<div class="t"><div class="t1">It took</div><div class="t2">my order</div></div>
+<div class="laptop"><div class="screen"><img src="thumb-screen.png"></div><div class="base"></div></div>
+<div class="order"><img src="thumb-order.png"></div>
+<div class="photo">YOUR PHOTO<br>pointing left at the laptop<br>(cut out, no background)</div>
+</body></html>
