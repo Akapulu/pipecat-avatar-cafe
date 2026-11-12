@@ -42,7 +42,7 @@ All five have a free tier or free credits.
 | Key | Where to get it |
 |---|---|
 | `DAILY_API_KEY` | [dashboard.daily.co](https://dashboard.daily.co) → Developers |
-| `AKAPULU_API_KEY` | [akapulu.com/api-keys](https://akapulu.com/api-keys/) → New key (10 free minutes) |
+| `AKAPULU_API_KEY` | [akapulu.com/api-keys](https://akapulu.com/api-keys/) → New key (20 free credits) |
 | `DEEPGRAM_API_KEY` | [console.deepgram.com](https://console.deepgram.com) → API Keys |
 | `OPENAI_API_KEY` | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
 | `CARTESIA_API_KEY` | [play.cartesia.ai/keys](https://play.cartesia.ai/keys) |
@@ -61,4 +61,4 @@ Open http://127.0.0.1:7860 and press **Start talking**. Tests: `pytest`.
 
 ## Cost
 
-Akapulu Labs bills 1 credit per live minute. The free plan includes 10 minutes. Starter is $48.97/month for 251 minutes. See [pricing](https://akapulu.com/pricing).
+Akapulu Labs bills 1 credit per live minute with the Pipecat plugin. The free plan includes 20 credits. Starter is $48.97/month for 502 credits. See [pricing](https://akapulu.com/pricing).
