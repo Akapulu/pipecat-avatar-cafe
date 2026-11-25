@@ -1,4 +1,4 @@
 pipecat-ai[daily,deepgram,openai,cartesia]==1.14.0
-pipecat-akapulu==0.1.14
+pipecat-akapulu==0.1.22
 python-dotenv
 aiohttp
