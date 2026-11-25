@@ -38,17 +38,6 @@ def required(name: str) -> str:
     return value.strip()
 
 
-def api_origin() -> str:
-    """Production by default. AKAPULU_API_URL overrides for harnesses."""
-    raw = os.environ.get("AKAPULU_API_URL")
-    if raw is None:
-        return AKAPULU_API_ORIGIN
-    origin = raw.strip().rstrip("/")
-    if not (origin.startswith("https://") or origin.startswith("http://")):
-        raise RuntimeError("AKAPULU_API_URL must be an http(s) origin")
-    return origin
-
-
 def daily_api_url(raw: str | None) -> str:
     if raw is None:
         return _DAILY_API
@@ -91,7 +80,7 @@ async def create_call(http: aiohttp.ClientSession) -> tuple[str, str, str, str]:
     """Return room_url, bot token, browser token, and Akapulu session id."""
     daily_key = required("DAILY_API_KEY")
     akapulu_key = required("AKAPULU_API_KEY")
-    origin = api_origin()
+    origin = AKAPULU_API_ORIGIN
     rest = DailyRESTHelper(
         daily_api_key=daily_key,
         daily_api_url=daily_api_url(os.environ.get("DAILY_API_URL")),
